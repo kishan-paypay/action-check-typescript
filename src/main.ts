@@ -42,6 +42,10 @@ async function run(): Promise<void> {
       throw new Error(`could not find tsconfig.json at: ${tsconfigPath}`)
     }
 
+    if (args.tscPath) {
+      info(`default tsc path will overrides by ${args.tscPath}`)
+    }
+
     const octokit = getOctokit(args.repoToken)
 
     const pr = github.context.payload.pull_request
@@ -85,7 +89,8 @@ async function run(): Promise<void> {
 
     const { output: tscOutputCurrent } = await runTscCli({
       workingDir,
-      tsconfigPath
+      tsconfigPath,
+      tscPath: args.tscPath
     })
 
     const errorsPr = parseOutputTsc(tscOutputCurrent)
@@ -118,7 +123,8 @@ async function run(): Promise<void> {
 
     const { output: tscOutputBase } = await runTscCli({
       workingDir,
-      tsconfigPath
+      tsconfigPath,
+      tscPath: args.tscPath,
     })
 
     const errorsBaseBranch = parseOutputTsc(tscOutputBase)
