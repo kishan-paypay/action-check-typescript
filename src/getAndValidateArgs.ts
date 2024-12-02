@@ -21,6 +21,7 @@ type Args = {
   repoToken: string
   directory: string
   tsConfigPath: string
+  tscPath: string;
   filesChanged: string[]
   filesAdded: string[]
   filesDeleted: string[]
@@ -61,6 +62,7 @@ export function getAndValidateArgs(): Args {
     repoToken: getInput('repo-token', { required: true }),
     directory: getInput('directory'),
     tsConfigPath: getInput('ts-config-path'),
+    tscPath: getInput('tsc-path'),
     filesChanged: (getInput('files-changed') ?? "").split(" "),
     filesAdded: (getInput('files-added') ?? "").split(" "),
     filesDeleted: (getInput('files-deleted') ?? "").split(" "),
